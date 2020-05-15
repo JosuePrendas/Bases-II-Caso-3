@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Threading;
 
 namespace ADONET
 {
@@ -11,7 +12,7 @@ namespace ADONET
         {
             createThreads(50,"Pooling","Select * from Customer");
         }
-		public void createThreads(int pQuantity,string pTypeConnection,string pCommand)
+		public static void createThreads(int pQuantity,string pTypeConnection,string pCommand)
         {
             Thread[] threads = new Thread[pQuantity];
             for(int threadIndex = 0; threadIndex<pQuantity; threadIndex++)
@@ -28,7 +29,7 @@ namespace ADONET
                 threads[threadIndex].Join();
             }
         }
-        public void abrirConexion(object pParametters)
+        public static void abrirConexion(object pParametters)
         {
             String[] parametters = (String[])pParametters;
             DataAccess.getInstance(parametters[0]).execQuery(parametters[1]);
