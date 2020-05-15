@@ -1,7 +1,6 @@
 ﻿
 using System;
 
-
 namespace ADONET
 {
     static class Program
@@ -10,7 +9,7 @@ namespace ADONET
         [STAThread]
         public static void Main(String[] args)
         {
-            DataAccess.getInstance("Caching").execQuery("Select * from Customer");
+            DataAccess.getInstance("Pooling").execQuery("Select * from Customer");
         }
     }
 }

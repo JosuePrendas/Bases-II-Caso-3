@@ -6,3 +6,11 @@ C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\ADONET\obj\Debug
 C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\ADONET\obj\Debug\ADONET.csproj.GenerateResource.cache
 C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\ADONET\obj\Debug\ADONET.exe
 C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\ADONET\obj\Debug\ADONET.pdb
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\bin\Debug\ADONET.exe.config
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\bin\Debug\ADONET.exe
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\bin\Debug\ADONET.pdb
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.csprojAssemblyReference.cache
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.Properties.Resources.resources
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.csproj.GenerateResource.cache
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.exe
+C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.pdb
