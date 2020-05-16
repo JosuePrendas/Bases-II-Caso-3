@@ -14,3 +14,12 @@ C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\
 C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.csproj.GenerateResource.cache
 C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.exe
 C:\Users\Pc\Desktop\Josue\Josue\TEC\2020\I Semestre\Bases\Caso3\Bases II Caso 3\ADONET\obj\Debug\ADONET.pdb
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\bin\Debug\ADONET.exe.config
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\bin\Debug\ADONET.exe
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\bin\Debug\ADONET.pdb
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\obj\Debug\ADONET.csprojAssemblyReference.cache
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\obj\Debug\ADONET.Properties.Resources.resources
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\obj\Debug\ADONET.csproj.GenerateResource.cache
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\obj\Debug\ADONET.csproj.CoreCompileInputs.cache
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\obj\Debug\ADONET.exe
+D:\Tony1\Documents\Visual Studio 2019\Bases II\Caso3\ADONET\obj\Debug\ADONET.pdb
