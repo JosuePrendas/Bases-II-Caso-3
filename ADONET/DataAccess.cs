@@ -15,6 +15,7 @@ namespace ADONET
     {
         private static DataAccess access;
         private string connectionString;
+        private string connectionStringW;
         private static Object lockObject = new object();
         private static bool cache = true;
 
@@ -26,7 +27,10 @@ namespace ADONET
                 cache = false;
             }
             connectionString = ConfigurationManager.AppSettings[typeConnection];
+            connectionStringW = ConfigurationManager.ConnectionStrings["PruebaCache"].ConnectionString;
             Console.WriteLine("Tipo de Conexion: " + typeConnection + "\nConnection String: " + connectionString);
+            //SqlDependency.Start(connectionString);
+            //execDependencyTest();
         }
 
         public static DataAccess getInstance(String typeConnection)
@@ -57,31 +61,29 @@ namespace ADONET
             {
                 if (connection.State == System.Data.ConnectionState.Open)
                     if (!cache)
-                        cacheTest();
-                    connection.Close();
-                
+                        cacheTest(query, lockObject);
+                    connection.Close();               
             }
         }
         //****************************************************************
-        public void cacheTest()
+        public void cacheTest(string rawKey, object value)
         {
             SqlCacheDependency SqlDep = null;
-            var string1 = "Caching";
-            var prueba = HttpRuntime.Cache[string1];
-            if (prueba == null)
+
+            Cache pruebaCache = new Cache();
+            object prueba = HttpRuntime.Cache.Get("rawKey");
+            if (pruebaCache == null)
             {
                 try
                 {
-                    SqlDep = new SqlCacheDependency("BD_Granel", "Persona");
+                    SqlDep = new SqlCacheDependency("PruebaCache", "Persona");
                 }
 
                 catch (DatabaseNotEnabledForNotificationException exDBDis)
                 {
                     try
                     {
-                        SqlCacheDependencyAdmin.EnableNotifications("BD_Granel");
-                        //ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString
-                        //connectionString
+                        SqlCacheDependencyAdmin.EnableNotifications("PruebaCache");
                     }
                     catch (UnauthorizedAccessException exPerm)
                     {
@@ -93,7 +95,7 @@ namespace ADONET
                 {
                     try
                     {
-                        SqlCacheDependencyAdmin.EnableTableForNotifications("BD_Granel", "Persona");
+                        SqlCacheDependencyAdmin.EnableTableForNotifications("PruebaCache", "Persona");
                     }
 
                     catch (SqlException exc)
@@ -104,7 +106,7 @@ namespace ADONET
                 }
                 finally
                 {
-                    HttpRuntime.Cache.Insert(string1, lockObject, SqlDep);
+                    HttpRuntime.Cache.Insert("rawKey", prueba, SqlDep);
                     Console.WriteLine("El objeto fue creado explicitamente.");
                 }
             }
@@ -112,6 +114,42 @@ namespace ADONET
             {
                 Console.WriteLine("El informacion fue obteniada del Cache.");
             }
+        }
+        void execDependencyTest()
+        {
+            // Assume connection is an open SqlConnection.
+            SqlConnection connection1 = new SqlConnection(connectionString);
+            // Create a new SqlCommand object.
+            using (SqlCommand command = new SqlCommand(
+                "SELECT persona_id, nombre, primerApellido, segundoApellido, edad FROM dbo.Persona", connection1))
+            {
+                // Create a dependency and associate it with the SqlCommand.
+                SqlDependency dependency = new SqlDependency(command);
+
+                // Subscribe to the SqlDependency event.
+                dependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
+
+                // Execute the command.
+                connection1.Open();            
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    // Process the DataReader.
+                    reader.Close();
+                }
+            }
+            Console.WriteLine("Entre en execDependencyTest");
+        }
+
+        // Handler method
+        void OnDependencyChange(object sender, SqlNotificationEventArgs e)
+        {
+            // Handle the event (for example, invalidate this cache entry).
+        }
+
+        void Termination()
+        {
+            // Release the dependency.
+            SqlDependency.Stop(connectionString);
         }
     }
 }

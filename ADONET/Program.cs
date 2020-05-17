@@ -11,7 +11,7 @@ namespace ADONET
         [STAThread]
         public static void Main(String[] args)
         {
-            createThreads(10,"Pooling","Select * from Cliente");
+            createThreads(10,"Pooling","Select * from Persona");
         }
 		public static void createThreads(int pQuantity,string pTypeConnection,string pCommand)
         {
