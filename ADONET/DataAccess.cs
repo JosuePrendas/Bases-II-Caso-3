@@ -16,14 +16,17 @@ namespace ADONET
         private static DataAccess access;
         private string connectionString;
         private static Object lockObject = new object();
+        private static bool cache = true;
 
 
         private DataAccess(String typeConnection)
         {
+            if(typeConnection == "Pooling")
+            {
+                cache = false;
+            }
             connectionString = ConfigurationManager.AppSettings[typeConnection];
-            Console.WriteLine("Tipo de Conexion: " + typeConnection+"\nConnection String: "+connectionString);
-            SqlDependency.Start(connectionString);
-            execDependencyTest();
+            Console.WriteLine("Tipo de Conexion: " + typeConnection + "\nConnection String: " + connectionString);
         }
 
         public static DataAccess getInstance(String typeConnection)
@@ -52,62 +55,63 @@ namespace ADONET
 
             }finally
             {
-                if(connection.State == System.Data.ConnectionState.Open)
+                if (connection.State == System.Data.ConnectionState.Open)
+                    if (!cache)
+                        cacheTest();
                     connection.Close();
                 
             }
-
-
         }
         //****************************************************************
-        //public T GetOrSetCache<T>(string key, T obj, int cacheTime) where T : class, new()
-        //{
-        //    System.Web.Caching.Cache cacheContainer = HttpRuntime.Cache;
-        //    T cacheObj = cacheContainer.Get(key) as T;
-
-        //    if (cacheObj == null)
-        //    {
-        //        cacheContainer.Insert(key,
-        //            obj,
-        //            null,
-        //            DateTime.Now.AddMinutes(cacheTime),
-        //            System.Web.Caching.Cache.NoSlidingExpiration);
-        //        cacheObj = obj;
-        //    }
-
-        //    return cacheObj;
-        //}
-
-        public void execDependencyTest()
+        public void cacheTest()
         {
-            // Assume connection is an open SqlConnection.
-            SqlConnection connection = new SqlConnection(connectionString);
-            // Create a new SqlCommand object.
-            using (SqlCommand command = new SqlCommand(
-                "SELECT nombre, primer_apellido, segundo_apellido FROM dbo.Personas WHERE persona_id = 1",
-                connection))
+            SqlCacheDependency SqlDep = null;
+            var string1 = "Caching";
+            var prueba = HttpRuntime.Cache[string1];
+            if (prueba == null)
             {
-                // Create a dependency and associate it with the SqlCommand.
-                SqlDependency dependency = new SqlDependency(command);
+                try
+                {
+                    SqlDep = new SqlCacheDependency("BD_Granel", "Persona");
+                }
 
-                // Subscribe to the SqlDependency event.
-                dependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
-                Console.WriteLine(dependency);
+                catch (DatabaseNotEnabledForNotificationException exDBDis)
+                {
+                    try
+                    {
+                        SqlCacheDependencyAdmin.EnableNotifications("BD_Granel");
+                        //ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString
+                        //connectionString
+                    }
+                    catch (UnauthorizedAccessException exPerm)
+                    {
+                        if (exPerm.Source != null)
+                            Console.WriteLine("IOException source: {0}", exPerm.Source);
+                    }
+                }
+                catch (TableNotEnabledForNotificationException exTabDis)
+                {
+                    try
+                    {
+                        SqlCacheDependencyAdmin.EnableTableForNotifications("BD_Granel", "Persona");
+                    }
+
+                    catch (SqlException exc)
+                    {
+                        if (exc.Source != null)
+                            Console.WriteLine("IOException source: {0}", exc.Source);
+                    }
+                }
+                finally
+                {
+                    HttpRuntime.Cache.Insert(string1, lockObject, SqlDep);
+                    Console.WriteLine("El objeto fue creado explicitamente.");
+                }
             }
-            Console.WriteLine("Aqui estoy");
-        }
-
-        // Handler method
-        void OnDependencyChange(object sender, SqlNotificationEventArgs e)
-        {
-            // Handle the event (for example, invalidate this cache entry).
-            Console.WriteLine(e);
-        }
-
-        void Termination()
-        {
-            // Release the dependency.
-            SqlDependency.Stop(connectionString);
+            else
+            {
+                Console.WriteLine("El informacion fue obteniada del Cache.");
+            }
         }
     }
 }
